@@ -32,3 +32,20 @@ class Item(Base):
     def __repr__(self):
 
         return f"<Item {self.id} {self.title} {self.description} {self.price} {self.listing_date} {self.seller_id}>"
+
+
+class Transaction(Base):
+
+    __tablename__ = "transactions"
+
+    id = Column(Integer(), primary_key=True)
+    transaction_amount = Column(Integer())
+    transaction_date = Column(DateTime, default=func.now())
+
+    item_id = Column(Integer(), ForeignKey("items.id"))
+    buyer_id = Column(Integer(), ForeignKey("users.id"))
+
+    def __repr__(self):
+
+        return f"<Transaction {self.id} {self.transaction_amount} {self.transaction_date} {self.item_id} {self.buyer_id}>"
+
