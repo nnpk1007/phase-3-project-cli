@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, ForeignKey
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship, backref
 
 Base = declarative_base()
 
@@ -11,6 +11,11 @@ class User(Base):
     id = Column(Integer(), primary_key=True)
     name = Column(String())
     registration_date = Column(DateTime, default=func.now())
+
+    # define relationship with Item
+    # am item is listed by a user and a user can list many item for sell ( user is on "one" side, and item is on "many" side)
+    items = relationship("Item", backref="seller")
+
 
     def __repr__(self):
 
@@ -28,6 +33,8 @@ class Item(Base):
     listing_date = Column(DateTime, default=func.now())
 
     seller_id = Column(Integer(), ForeignKey("users.id"))
+
+    seller = relationship("User", back_populates="items")
 
     def __repr__(self):
 
