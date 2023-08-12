@@ -1,17 +1,8 @@
 from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship, backref
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
-
-
-# a user can have many transactions and a transaction can be involed in many user(seller and buyer)
-user_transaction = Table(
-    "user_transactions",
-    Base.metadata,
-    Column("user_id", ForeignKey("users.id"), primary_key=True),
-    Column("transaction_id", ForeignKey("transactions.id"), primary_key=True),
-    extend_existing=False,
-)
 
 
 class User(Base):
@@ -23,9 +14,11 @@ class User(Base):
     registration_date = Column(DateTime, default=func.now())
 
     # define relationship with Item
-    # am item is listed by a user and a user can list many item for sell ( user is on "one" side, and item is on "many" side)
-    items = relationship("Item", backref="user")
-    transactions = relationship("Transaction", secondary=user_transaction, back_populates="users")
+    # am item is listed by a user and a user can list many item for sell (user is on "one" side, and item is on "many" side)
+    items = relationship("Item", backref=backref("user"))
+    # define relationship with transaction
+    # a transaction is purchased by a user and a user can have many transactions (user is on "one" side, and transaction is on "many" side)
+    transactions = relationship("Transaction", backref=backref("user"))
 
     def __repr__(self):
 
@@ -44,8 +37,6 @@ class Item(Base):
 
     seller_id = Column(Integer(), ForeignKey("users.id"))
 
-    #user = relationship("User", back_populates="items")
-
     def __repr__(self):
 
         return f"<Item {self.id} {self.title} {self.description} {self.price} {self.listing_date} {self.seller_id}>"
@@ -61,8 +52,6 @@ class Transaction(Base):
 
     item_id = Column(Integer(), ForeignKey("items.id"))
     buyer_id = Column(Integer(), ForeignKey("users.id"))
-
-    users = relationship("User", secondary=user_transaction, back_populates="transactions")
 
     def __repr__(self):
 
