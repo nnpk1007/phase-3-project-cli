@@ -24,7 +24,7 @@ class User(Base):
 
     # define relationship with Item
     # am item is listed by a user and a user can list many item for sell ( user is on "one" side, and item is on "many" side)
-    items = relationship("Item", backref="seller")
+    items = relationship("Item", backref="user")
     transactions = relationship("Transaction", secondary=user_transaction, back_populates="users")
 
     def __repr__(self):
@@ -44,7 +44,7 @@ class Item(Base):
 
     seller_id = Column(Integer(), ForeignKey("users.id"))
 
-    seller = relationship("User", back_populates="items")
+    #user = relationship("User", back_populates="items")
 
     def __repr__(self):
 
