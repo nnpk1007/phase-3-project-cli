@@ -1,7 +1,17 @@
-from sqlalchemy import Column, Integer, String, DateTime, func, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship, backref
 
 Base = declarative_base()
+
+
+# a user can have many transactions and a transaction can be involed in many user(seller and buyer)
+user_transaction = Table(
+    "user_transactions",
+    Base.metadata,
+    Column("user_id", ForeignKey("users.id"), primary_key=True),
+    Column("transaction_id", ForeignKey("transactions.id"), primary_key=True),
+    extend_existing=False,
+)
 
 
 class User(Base):
@@ -15,7 +25,7 @@ class User(Base):
     # define relationship with Item
     # am item is listed by a user and a user can list many item for sell ( user is on "one" side, and item is on "many" side)
     items = relationship("Item", backref="seller")
-
+    transactions = relationship("Transaction", secondary=user_transaction, back_populates="users")
 
     def __repr__(self):
 
@@ -51,6 +61,8 @@ class Transaction(Base):
 
     item_id = Column(Integer(), ForeignKey("items.id"))
     buyer_id = Column(Integer(), ForeignKey("users.id"))
+
+    users = relationship("User", secondary=user_transaction, back_populates="transactions")
 
     def __repr__(self):
 
