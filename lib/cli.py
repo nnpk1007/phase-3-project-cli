@@ -1,5 +1,5 @@
 import re
-from prettycli import red, yellow
+from prettycli import red, yellow, blue
 from simple_term_menu import TerminalMenu
 from models import User, Item, Transaction
 
@@ -68,6 +68,17 @@ class Cli():
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
         
+        if options[menu_entry_index] == "Items On Sale":
+            items = Item.show_items()
+
+            if items:
+                print(yellow("Items on sale:"))
+                for item in items:
+                    print(blue(f"Item: {item.title}"))
+                    print(f"Description: {item.description}")
+                    print(f"Price: ${item.price}")
+
+
     def exit(self):
         print("Good bye!")
     

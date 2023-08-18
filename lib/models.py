@@ -65,7 +65,13 @@ class Item(Base):
     def __repr__(self):
 
         return f"<Item {self.id} {self.title} {self.description} {self.price} {self.listing_date} {self.seller_id}>"
+
+
+    @classmethod
+    def show_items(cls):
+        items = session.query(cls).all()
         
+        return items
 
 class Transaction(Base):
 
