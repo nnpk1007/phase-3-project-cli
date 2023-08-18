@@ -38,6 +38,17 @@ class User(Base):
         return user
 
 
+    @classmethod
+    def create_user(cls, name, email):
+
+        user = cls(name=name, email=email)
+
+        session.add(user)
+        session.commit()
+
+        return user
+
+
 class Item(Base):
 
     __tablename__ = "items"
