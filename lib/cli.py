@@ -64,26 +64,33 @@ class Cli():
 
     def show_user_options(self):
         
-        options = ["Items On Sale", "Add Item For Sale", "Buy Item", "Show Transaction", "Exit"]
-        terminal_menu = TerminalMenu(options)
-        menu_entry_index = terminal_menu.show()
-        
-        if options[menu_entry_index] == "Items On Sale":
-            items = Item.show_items()
+        while True:
+            options = ["Items On Sale", "Add Item For Sale", "Buy Item", "Show Transaction", "Exit"]
+            terminal_menu = TerminalMenu(options)
+            menu_entry_index = terminal_menu.show()
+            
+            if options[menu_entry_index] == "Items On Sale":
+                items = Item.show_items()
 
-            if items:
-                print(yellow("Items on sale:"))
+                if items:
+                    print(yellow("Items on sale:"))
 
-                for item in items:
-                    print(blue(f"Item: {item.title}"))
-                    print(f"Description: {item.description}")
-                    print(f"Price: ${item.price}")
-                    user = User.find_user_by_seller_id(item.seller_id)
-                    print(f"Sold by: {user.name}")
+                    for item in items:
+                        print(blue(f"Item: {item.title}"))
+                        print(f"Description: {item.description}")
+                        print(f"Price: ${item.price}")
+                        user = User.find_user_by_seller_id(item.seller_id)
+                        print(f"Sold by: {user.name}")
 
                     
+                else:
+                    print("No items are available")
+            else:
+                self.exit()
+                break
+
     def exit(self):
-        print("Good bye!")
+        print(f"Good bye {self.current_user.name}!")
     
 app = Cli()
 app.start()

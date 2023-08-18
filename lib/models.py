@@ -77,9 +77,11 @@ class Item(Base):
 
     @classmethod
     def show_items(cls):
+
         items = session.query(cls).all()
         
         return items
+        
 
 class Transaction(Base):
 
