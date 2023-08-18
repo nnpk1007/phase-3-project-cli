@@ -36,6 +36,7 @@ class Cli():
             self.current_user = user
 
             print(f"Hello, {user.name}!")
+            self.show_user_options()
         else:
             print(red("User not found. Please try again!"))
             self.start()
@@ -52,12 +53,20 @@ class Cli():
             user = User.create_user(name, email)
 
             self.current_user = user
+
+            self.show_user_options()
         else:
             print("Invalid email. Please try again!")
             self.start() 
 
         print(f"Hello, {user.name}!")
 
+
+    def show_user_options(self):
+        
+        options = ["Items On Sale", "Add Item For Sale", "Buy Item", "Show Transaction", "Exit"]
+        terminal_menu = TerminalMenu(options)
+        menu_entry_index = terminal_menu.show()
         
     def exit(self):
         print("Good bye!")
