@@ -27,6 +27,7 @@ class Cli():
 
 
     def handle_login(self):
+
         email = input("Please enter your email: ")
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
@@ -35,21 +36,28 @@ class Cli():
             self.current_user = user
 
             print(f"Hello, {user.name}!")
-
         else:
             print(red("User not found. Please try again!"))
             self.start()
 
     
     def handle_sign_up(self):
+
         name = input("Enter your full name: ")
         email = input("Enter your email: ")
 
-        user = User.create_user(name, email)
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
-        self.current_user = user 
+        if re.fullmatch(regex, email):
+            user = User.create_user(name, email)
+
+            self.current_user = user
+        else:
+            print("Invalid email. Please try again!")
+            self.start() 
 
         print(f"Hello, {user.name}!")
+
         
     def exit(self):
         print("Good bye!")
