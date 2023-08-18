@@ -39,6 +39,14 @@ class User(Base):
 
 
     @classmethod
+    def find_user_by_seller_id(cls, seller_id):
+
+        user = session.query(cls).filter(cls.id == seller_id).first()
+
+        return user
+        
+
+    @classmethod
     def create_user(cls, name, email):
 
         user = cls(name=name, email=email)

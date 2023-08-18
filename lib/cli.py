@@ -73,12 +73,15 @@ class Cli():
 
             if items:
                 print(yellow("Items on sale:"))
+
                 for item in items:
                     print(blue(f"Item: {item.title}"))
                     print(f"Description: {item.description}")
                     print(f"Price: ${item.price}")
+                    user = User.find_user_by_seller_id(item.seller_id)
+                    print(f"Sold by: {user.name}")
 
-
+                    
     def exit(self):
         print("Good bye!")
     
