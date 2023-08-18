@@ -1,8 +1,11 @@
-from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey, UniqueConstraint
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey, create_engine
+from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+engine = create_engine("sqlite:///data.db")
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 class User(Base):
@@ -21,9 +24,18 @@ class User(Base):
     # a transaction is purchased by a user and a user can have many transactions (user is on "one" side, and transaction is on "many" side)
     transactions = relationship("Transaction", backref=backref("user"))
 
+
     def __repr__(self):
 
         return f"<User {self.id} {self.name} {self.email} {self.registration_date}>"
+
+
+    @classmethod
+    def find_user_by_email(cls, email):
+
+        user = session.query(cls).filter(cls.email == email).first()
+
+        return user
 
 
 class Item(Base):
@@ -38,10 +50,11 @@ class Item(Base):
 
     seller_id = Column(Integer(), ForeignKey("users.id"))
 
+
     def __repr__(self):
 
         return f"<Item {self.id} {self.title} {self.description} {self.price} {self.listing_date} {self.seller_id}>"
-
+        
 
 class Transaction(Base):
 
@@ -53,6 +66,8 @@ class Transaction(Base):
 
     item_id = Column(Integer(), ForeignKey("items.id"))
     buyer_id = Column(Integer(), ForeignKey("users.id"))
+    
+    
     def __repr__(self):
 
         return f"<Transaction {self.id} {self.transaction_amount} {self.transaction_date} {self.item_id} {self.buyer_id}>"
