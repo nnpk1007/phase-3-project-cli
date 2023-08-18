@@ -23,9 +23,16 @@ if __name__ == "__main__":
     print("Seeding data...")
 
     # create fake users
-    fake_users = [User(name=fake.name()) for _ in range(5)]
-    session.add_all(fake_users)
-    session.commit()
+    fake_users = []
+    for _ in range(5):
+        name = fake.name()
+        email = name.lower().replace(" ", "_") + "@gmail.com"
+        
+        fake_user = User(name=name, email=email)
+        fake_users.append(fake_user)
+
+        session.add(fake_user)
+        session.commit()
     
     # create fake items
     fake_items = [

@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -23,7 +23,7 @@ class User(Base):
 
     def __repr__(self):
 
-        return f"<User {self.id} {self.name} {self.registration_date}>"
+        return f"<User {self.id} {self.name} {self.email} {self.registration_date}>"
 
 
 class Item(Base):
