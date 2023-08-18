@@ -65,7 +65,7 @@ class Cli():
     def show_user_options(self):
         
         while True:
-            options = ["Items On Sale", "Add Item For Sale", "Buy Item", "Your Transactions", "Exit"]
+            options = ["Items On Sale", "Add Item For Sale", "Buy An Item", "Your Transactions", "Exit"]
             terminal_menu = TerminalMenu(options)
             menu_entry_index = terminal_menu.show()
             
@@ -77,6 +77,7 @@ class Cli():
 
                     for item in items:
                         print(blue(f"Item: {item.title}"))
+                        print(f"ID: {item.id}")
                         print(f"Description: {item.description}")
                         print(f"Price: ${item.price}")
                         user = User.find_user_by_seller_id(item.seller_id)
@@ -91,11 +92,18 @@ class Cli():
 
                 item = Item.add_item(title, description, price, seller_id=self.current_user.id)
                 print(yellow("Item added"))
+            
+            elif options[menu_entry_index] == "Buy An Item":
+                item_id = input("Enter the item id which you want to buy: ")
+
+                Item.delete_item_by_id(item_id)
             else:
                 self.exit()
                 break
 
+    
     def exit(self):
+
         print(f"Good bye {self.current_user.name}!")
     
 app = Cli()

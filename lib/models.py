@@ -93,7 +93,18 @@ class Item(Base):
         return item
 
 
+    @classmethod
+    def delete_item_by_id(cls, item_id):
 
+        item = session.query(cls).filter(cls.id == item_id).first()
+
+        if item:
+            session.delete(item)
+            session.commit()
+
+            print("Item deleted")
+        else:
+            print("Item not found")
 
 class Transaction(Base):
 
