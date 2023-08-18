@@ -26,7 +26,7 @@ if __name__ == "__main__":
     fake_users = [User(name=fake.name()) for _ in range(5)]
     session.add_all(fake_users)
     session.commit()
-
+    
     # create fake items
     fake_items = [
         {"title":"iPhone 13", "description":"Like new", "price":700},
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     print("Done seeding.")
 
-
+    import ipdb; ipdb.set_trace()
 
     
 

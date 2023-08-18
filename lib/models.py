@@ -14,7 +14,7 @@ class User(Base):
     registration_date = Column(DateTime, default=func.now())
 
     # define relationship with Item
-    # am item is listed by a user and a user can list many item for sell (user is on "one" side, and item is on "many" side)
+    # an item is listed by a user and a user can list many item for sell (user is on "one" side, and item is on "many" side)
     items = relationship("Item", backref=backref("user"))
     # define relationship with transaction
     # a transaction is purchased by a user and a user can have many transactions (user is on "one" side, and transaction is on "many" side)
