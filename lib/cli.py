@@ -65,7 +65,7 @@ class Cli():
     def show_user_options(self):
         
         while True:
-            options = ["Items On Sale", "Add Item For Sale", "Buy Item", "Show Transaction", "Exit"]
+            options = ["Items On Sale", "Add Item For Sale", "Buy Item", "Your Transactions", "Exit"]
             terminal_menu = TerminalMenu(options)
             menu_entry_index = terminal_menu.show()
             
@@ -81,10 +81,16 @@ class Cli():
                         print(f"Price: ${item.price}")
                         user = User.find_user_by_seller_id(item.seller_id)
                         print(f"Sold by: {user.name}")
-
-                    
                 else:
                     print("No items are available")
+
+            elif options[menu_entry_index] == "Add Item For Sale":
+                title = input("Item title: ")
+                description = input("Description: ")
+                price = input("Price: $")
+
+                item = Item.add_item(title, description, price, seller_id=self.current_user.id)
+                print(yellow("Item added"))
             else:
                 self.exit()
                 break

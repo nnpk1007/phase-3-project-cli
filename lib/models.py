@@ -81,7 +81,19 @@ class Item(Base):
         items = session.query(cls).all()
         
         return items
-        
+
+
+    @classmethod
+    def add_item(cls, title, description, price, seller_id):
+
+        item = cls(title=title, description=description, price=price, seller_id=seller_id)
+        session.add(item)
+        session.commit()
+
+        return item
+
+
+
 
 class Transaction(Base):
 
