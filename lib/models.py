@@ -11,6 +11,7 @@ class User(Base):
 
     id = Column(Integer(), primary_key=True)
     name = Column(String())
+    email = Column(String(), unique=True)
     registration_date = Column(DateTime, default=func.now())
 
     # define relationship with Item
@@ -52,7 +53,6 @@ class Transaction(Base):
 
     item_id = Column(Integer(), ForeignKey("items.id"))
     buyer_id = Column(Integer(), ForeignKey("users.id"))
-
     def __repr__(self):
 
         return f"<Transaction {self.id} {self.transaction_amount} {self.transaction_date} {self.item_id} {self.buyer_id}>"
