@@ -157,7 +157,7 @@ class Cli():
     def exit(self):
 
         self.clear_screen()
-        print(blue(f"Good bye {self.current_user.name}!"))
+        print(blue("Goodbye!"))
 
     
     def clear_screen(self):

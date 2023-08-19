@@ -58,7 +58,8 @@ if __name__ == "__main__":
         session.add(item)
         session.commit()
 
-        # # exclude the seller from the buyer
+        # fake transaction is used at the beginning when I first created the tables to test relationships
+        # exclude the seller from the buyer
         # buyers = [user for user in fake_users if user != random_seller]   
         # # choose a random buyer
         # random_buyer = random.choice(buyers)
@@ -76,7 +77,7 @@ if __name__ == "__main__":
 
     print("Done seeding.")
 
-    import ipdb; ipdb.set_trace()
+   #import ipdb; ipdb.set_trace()
 
     
 
