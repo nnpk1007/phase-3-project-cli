@@ -130,7 +130,7 @@ class Cli():
         if not item:
             print(yellow("Item not found"))
         elif item.seller_id == self.current_user.id:
-            print(red("You can not buy an item which is sold by yourself"))
+            print(red("You can not buy an item which is sold by yourself."))
         else:
             Transaction.add_transaction(item_id, self.current_user.id)
             Item.delete_item_by_id(item_id)
@@ -142,19 +142,22 @@ class Cli():
         self.clear_screen()
 
         transactions = Transaction.show_transactions(self.current_user.id)
-                
-        print(blue("Your transactions:"))
 
-        for transaction in transactions:
-            print(yellow(f"Item: {transaction.item_title}"))
-            print(f"Transaction amount: {transaction.transaction_amount}")
-            print(f"Transaction date: {transaction.transaction_date}")
+        if len(transactions) == 0:
+            print(yellow("You don't have any transaction.")        )
+        else:
+            print(blue("Your transactions:"))
+
+            for transaction in transactions:    
+                print(yellow(f"Item: {transaction.item_title}"))
+                print(f"Transaction amount: ${transaction.transaction_amount}")
+                print(f"Transaction date: {transaction.transaction_date}")
 
 
     def exit(self):
 
         self.clear_screen()
-        print(f"Good bye {self.current_user.name}!")
+        print(blue(f"Good bye {self.current_user.name}!"))
 
     
     def clear_screen(self):
