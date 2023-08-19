@@ -101,8 +101,11 @@ class Cli():
 
             elif options[menu_entry_index] == "Your Transactions":
                 transactions = Transaction.show_transactions(self.current_user.id)
-                print(transactions)
-
+                print(blue("Your transactions:"))
+                for transaction in transactions:
+                    print(yellow(f"Item: {transaction.item_title}"))
+                    print(f"Transaction amount: {transaction.transaction_amount}")
+                    print(f"Transaction date: {transaction.transaction_date}")
 
             else:
                 self.exit()

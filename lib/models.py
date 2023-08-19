@@ -94,6 +94,13 @@ class Item(Base):
 
 
     @classmethod
+    def find_item_by_id(cls, item_id):
+
+        item = session.query(Item).filter(Item.id == item_id).first()
+
+        return item
+
+    @classmethod
     def delete_item_by_id(cls, item_id):
 
         item = session.query(cls).filter(cls.id == item_id).first()
@@ -114,6 +121,7 @@ class Transaction(Base):
     id = Column(Integer(), primary_key=True)
     transaction_amount = Column(Integer())
     transaction_date = Column(DateTime, default=func.now())
+    item_title = Column(String())
 
     item_id = Column(Integer(), ForeignKey("items.id"))
     buyer_id = Column(Integer(), ForeignKey("users.id"))
@@ -126,9 +134,9 @@ class Transaction(Base):
     @classmethod
     def add_transaction(cls, item_id, buyer_id):
 
-        item = session.query(Item).filter(Item.id==item_id).first()
+        item = Item.find_item_by_id(item_id)
 
-        transaction = cls(transaction_amount=item.price, item_id=item_id, buyer_id=buyer_id )
+        transaction = cls(transaction_amount=item.price, item_title=item.title, item_id=item_id, buyer_id=buyer_id )
 
         session.add(transaction)
         session.commit()
