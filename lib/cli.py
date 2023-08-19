@@ -56,7 +56,7 @@ class Cli():
 
             self.show_user_options()
         else:
-            print("Invalid email. Please try again!")
+            print(red("Invalid email. Please try again!"))
             self.start() 
 
         print(f"Hello, {user.name}!")
@@ -98,12 +98,14 @@ class Cli():
                 
                 item = Item.find_item_by_id(item_id)
                 
-                if item:
+                if not item:
+                    print(yellow("Item not found"))
+                elif item.seller_id == self.current_user.id:
+                    print(red("You can not buy an item which is sold by yourself"))
+                else:
                     Transaction.add_transaction(item_id, self.current_user.id)
                     Item.delete_item_by_id(item_id)
                     print(yellow("Item bougt"))
-                else:
-                    print(yellow("Item not found"))
 
             elif options[menu_entry_index] == "Your Transactions":
                 transactions = Transaction.show_transactions(self.current_user.id)
