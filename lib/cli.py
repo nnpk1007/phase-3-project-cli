@@ -95,13 +95,21 @@ class Cli():
             
             elif options[menu_entry_index] == "Buy An Item":
                 item_id = input("Enter the item id which you want to buy: ")
-
-                Transaction.add_transaction(item_id, self.current_user.id)
-                Item.delete_item_by_id(item_id)
+                
+                item = Item.find_item_by_id(item_id)
+                
+                if item:
+                    Transaction.add_transaction(item_id, self.current_user.id)
+                    Item.delete_item_by_id(item_id)
+                    print(yellow("Item bougt"))
+                else:
+                    print(yellow("Item not found"))
 
             elif options[menu_entry_index] == "Your Transactions":
                 transactions = Transaction.show_transactions(self.current_user.id)
+                
                 print(blue("Your transactions:"))
+
                 for transaction in transactions:
                     print(yellow(f"Item: {transaction.item_title}"))
                     print(f"Transaction amount: {transaction.transaction_amount}")
