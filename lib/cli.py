@@ -53,13 +53,12 @@ class Cli():
             user = User.create_user(name, email)
 
             self.current_user = user
+            print(blue(f"Hello, {user.name}!"))
 
             self.show_user_options()
         else:
             print(red("Invalid email. Please try again!"))
             self.start() 
-
-        print(f"Hello, {user.name}!")
 
 
     def show_user_options(self):
@@ -70,61 +69,78 @@ class Cli():
             menu_entry_index = terminal_menu.show()
             
             if options[menu_entry_index] == "Items On Sale":
-                items = Item.show_items()
-
-                if items:
-                    print(yellow("Items on sale:"))
-
-                    for item in items:
-                        print(blue(f"Item: {item.title}"))
-                        print(f"ID: {item.id}")
-                        print(f"Description: {item.description}")
-                        print(f"Price: ${item.price}")
-                        user = User.find_user_by_seller_id(item.seller_id)
-                        print(f"Sold by: {user.name}")
-                else:
-                    print("No items are available")
-
+                self.items_on_sale()    
             elif options[menu_entry_index] == "Add Item For Sale":
-                title = input("Item title: ")
-                description = input("Description: ")
-                price = input("Price: $")
-
-                item = Item.add_item(title, description, price, seller_id=self.current_user.id)
-                print(yellow("Item added"))
-            
+                self.add_item_for_sale()
             elif options[menu_entry_index] == "Buy An Item":
-                item_id = input("Enter the item id which you want to buy: ")
-                
-                item = Item.find_item_by_id(item_id)
-                
-                if not item:
-                    print(yellow("Item not found"))
-                elif item.seller_id == self.current_user.id:
-                    print(red("You can not buy an item which is sold by yourself"))
-                else:
-                    Transaction.add_transaction(item_id, self.current_user.id)
-                    Item.delete_item_by_id(item_id)
-                    print(yellow("Item bougt"))
-
+                self.buy_an_item()
             elif options[menu_entry_index] == "Your Transactions":
-                transactions = Transaction.show_transactions(self.current_user.id)
-                
-                print(blue("Your transactions:"))
-
-                for transaction in transactions:
-                    print(yellow(f"Item: {transaction.item_title}"))
-                    print(f"Transaction amount: {transaction.transaction_amount}")
-                    print(f"Transaction date: {transaction.transaction_date}")
-
+                self.your_transactions()
             else:
                 self.exit()
                 break
 
+
+    def items_on_sale(self):
+
+        items = Item.show_items()
+
+        if items:
+            print(yellow("Items on sale:"))
+
+            for item in items:
+                print(blue(f"Item: {item.title}"))
+                print(f"ID: {item.id}")
+                print(f"Description: {item.description}")
+                print(f"Price: ${item.price}")
+                user = User.find_user_by_seller_id(item.seller_id)
+                print(f"Sold by: {user.name}")
+        else:
+            print("No items are available")
+
+
+    def add_item_for_sale(self):
+
+        title = input("Item title: ")
+        description = input("Description: ")
+        price = input("Price: $")
+
+        item = Item.add_item(title, description, price, seller_id=self.current_user.id)
+        print(yellow("Item added"))
     
+
+    def buy_an_item(self):
+
+        item_id = input("Enter the item id which you want to buy: ")
+                
+        item = Item.find_item_by_id(item_id)
+        
+        if not item:
+            print(yellow("Item not found"))
+        elif item.seller_id == self.current_user.id:
+            print(red("You can not buy an item which is sold by yourself"))
+        else:
+            Transaction.add_transaction(item_id, self.current_user.id)
+            Item.delete_item_by_id(item_id)
+            print(yellow("Item bougt"))
+    
+
+    def your_transactions(self):
+
+        transactions = Transaction.show_transactions(self.current_user.id)
+                
+        print(blue("Your transactions:"))
+
+        for transaction in transactions:
+            print(yellow(f"Item: {transaction.item_title}"))
+            print(f"Transaction amount: {transaction.transaction_amount}")
+            print(f"Transaction date: {transaction.transaction_date}")
+
+
     def exit(self):
 
         print(f"Good bye {self.current_user.name}!")
+
     
 app = Cli()
 app.start()
