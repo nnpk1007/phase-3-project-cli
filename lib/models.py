@@ -134,3 +134,11 @@ class Transaction(Base):
         session.commit()
 
         return transaction
+
+
+    @classmethod
+    def show_transactions(cls, buyer_id):
+        
+        transactions = session.query(Transaction).filter(cls.buyer_id == buyer_id).all()
+
+        return transactions

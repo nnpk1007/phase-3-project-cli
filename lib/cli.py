@@ -99,7 +99,9 @@ class Cli():
                 Transaction.add_transaction(item_id, self.current_user.id)
                 Item.delete_item_by_id(item_id)
 
-            #elif options[menu_entry_index] == "Your Transactions":
+            elif options[menu_entry_index] == "Your Transactions":
+                transactions = Transaction.show_transactions(self.current_user.id)
+                print(transactions)
 
 
             else:
