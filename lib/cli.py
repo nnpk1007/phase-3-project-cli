@@ -12,6 +12,7 @@ class Cli():
 
     
     def start(self):
+        self.clear_screen()
         
         print(yellow("WELCOME TO FLATIRON MARKET PLACE"))
         options = ["Login", "Sign Up", "Exit"]
@@ -28,14 +29,15 @@ class Cli():
 
     def handle_login(self):
 
+        self.clear_screen()
+        
         email = input("Please enter your email: ")
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
         if re.fullmatch(regex, email):
             user = User.find_user_by_email(email)
             self.current_user = user
-
-            print(f"Hello, {user.name}!")
+            print(yellow(f"Hello, {user.name}!"))
             self.show_user_options()
         else:
             print(red("User not found. Please try again!"))
@@ -43,6 +45,8 @@ class Cli():
 
     
     def handle_sign_up(self):
+        
+        self.clear_screen()
 
         name = input("Enter your full name: ")
         email = input("Enter your email: ")
@@ -64,6 +68,7 @@ class Cli():
     def show_user_options(self):
         
         while True:
+            
             options = ["Items On Sale", "Add Item For Sale", "Buy An Item", "Your Transactions", "Exit"]
             terminal_menu = TerminalMenu(options)
             menu_entry_index = terminal_menu.show()
@@ -83,6 +88,8 @@ class Cli():
 
     def items_on_sale(self):
 
+        self.clear_screen()            
+
         items = Item.show_items()
 
         if items:
@@ -101,6 +108,8 @@ class Cli():
 
     def add_item_for_sale(self):
 
+        self.clear_screen()
+
         title = input("Item title: ")
         description = input("Description: ")
         price = input("Price: $")
@@ -111,7 +120,10 @@ class Cli():
 
     def buy_an_item(self):
 
-        item_id = input("Enter the item id which you want to buy: ")
+        self.clear_screen()
+        self.items_on_sale()
+
+        item_id = input(yellow("Enter the item id which you want to buy: "))
                 
         item = Item.find_item_by_id(item_id)
         
@@ -127,6 +139,8 @@ class Cli():
 
     def your_transactions(self):
 
+        self.clear_screen()
+
         transactions = Transaction.show_transactions(self.current_user.id)
                 
         print(blue("Your transactions:"))
@@ -139,7 +153,13 @@ class Cli():
 
     def exit(self):
 
+        self.clear_screen()
         print(f"Good bye {self.current_user.name}!")
+
+    
+    def clear_screen(self):
+
+        print("\n" * 40)
 
     
 app = Cli()
