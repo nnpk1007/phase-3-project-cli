@@ -96,7 +96,12 @@ class Cli():
             elif options[menu_entry_index] == "Buy An Item":
                 item_id = input("Enter the item id which you want to buy: ")
 
+                Transaction.add_transaction(item_id, self.current_user.id)
                 Item.delete_item_by_id(item_id)
+
+            #elif options[menu_entry_index] == "Your Transactions":
+
+
             else:
                 self.exit()
                 break

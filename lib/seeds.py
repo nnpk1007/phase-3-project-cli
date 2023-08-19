@@ -58,19 +58,19 @@ if __name__ == "__main__":
         session.add(item)
         session.commit()
 
-        # exclude the seller from the buyer
-        buyers = [user for user in fake_users if user != random_seller]   
-        # choose a random buyer
-        random_buyer = random.choice(buyers)
+        # # exclude the seller from the buyer
+        # buyers = [user for user in fake_users if user != random_seller]   
+        # # choose a random buyer
+        # random_buyer = random.choice(buyers)
 
-        fake_transaction = Transaction(
-            transaction_amount=fake_item["price"],
-            item_id=item.id,
-            buyer_id=random_buyer.id
-        )
+        # fake_transaction = Transaction(
+        #     transaction_amount=fake_item["price"],
+        #     item_id=item.id,
+        #     buyer_id=random_buyer.id
+        # )
 
-        session.add(fake_transaction)
-        session.commit()
+        # session.add(fake_transaction)
+        # session.commit()
 
     session.close()
 

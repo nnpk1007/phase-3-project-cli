@@ -102,9 +102,10 @@ class Item(Base):
             session.delete(item)
             session.commit()
 
-            print("Item deleted")
+            print("Item bought")
         else:
             print("Item not found")
+            
 
 class Transaction(Base):
 
@@ -122,3 +123,14 @@ class Transaction(Base):
 
         return f"<Transaction {self.id} {self.transaction_amount} {self.transaction_date} {self.item_id} {self.buyer_id}>"
 
+    @classmethod
+    def add_transaction(cls, item_id, buyer_id):
+
+        item = session.query(Item).filter(Item.id==item_id).first()
+
+        transaction = cls(transaction_amount=item.price, item_id=item_id, buyer_id=buyer_id )
+
+        session.add(transaction)
+        session.commit()
+
+        return transaction
