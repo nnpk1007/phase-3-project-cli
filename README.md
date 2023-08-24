@@ -66,10 +66,7 @@ Users can exit the application when they want.
     cd lib
     python3 seeds.py
     ```
-    If you have problem when seeding data. Try to run 
-    ```bash
-    alembic upgrade head
-     
+        
 5. Run the applicaiton (you're already in lib folder):
     ```bash
     python3 cli.py

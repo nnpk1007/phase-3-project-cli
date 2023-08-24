@@ -3,3 +3,6 @@
 # ignore SQLite database file
 lib/data.db
 
+# ignore virtual enviroment files
+.venv
+venv/
