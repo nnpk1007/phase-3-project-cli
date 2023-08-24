@@ -12,7 +12,6 @@ class Cli():
 
     
     def start(self):
-        self.clear_screen()
         
         print(yellow("WELCOME TO FLATIRON MARKET PLACE"))
         options = ["Login", "Sign Up", "Exit"]
@@ -33,14 +32,18 @@ class Cli():
         
         email = input("Please enter your email: ")
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-
+                
         if re.fullmatch(regex, email):
             user = User.find_user_by_email(email)
-            self.current_user = user
-            print(yellow(f"Hello, {user.name}!"))
-            self.show_user_options()
+            if user:
+                self.current_user = user
+                print(yellow(f"Hello, {user.name}!"))
+                self.show_user_options()
+            else:
+                print(red("User not found. Please try again!"))
+                self.start()
         else:
-            print(red("User not found. Please try again!"))
+            print(red("Invalid email. Please try again"))
             self.start()
 
     
@@ -101,8 +104,6 @@ class Cli():
         else:
             print("No items are available")
     
-    
-
 
     def search_for_item(self):
         self.clear_screen()
