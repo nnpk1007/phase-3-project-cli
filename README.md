@@ -6,7 +6,7 @@ Welcome to Flatiron Market Place! This project is a command-line application tha
 
 ## Introduction
 
-Flatiron Market Place is a command-line application built using SQLAlchemy that allows users to interact with an online marketplace. Users can log in or sign up, view items on sale, search item, add their own items for sale, buy items, and view their transaction history.
+Flatiron Market Place is a command-line application built using Python and SQLAlchemy that allows users to interact with an online marketplace. Users can log in or sign up, view items on sale, search item, add their own items for sale, buy items, and view their transaction history.
 
 ## Features
 
@@ -61,13 +61,17 @@ Users can exit the application when they want.
     ```bash
     pipenv shell
 
-4. Set up initial data:
+3. Create tables (because I have .gitignore file to ignore data.db file, so you have to do this step to avoid error)
     ```bash
     cd lib
+    alembic upgrade head
+
+4. Set up initial data (you can skip this step if you don't want any data in your table):
+    ```bash
     python3 seeds.py
     ```
         
-5. Run the applicaiton (you're already in lib folder):
+6. Run the applicaiton (you're already in lib folder):
     ```bash
     python3 cli.py
 
