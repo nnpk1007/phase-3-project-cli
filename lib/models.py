@@ -1,11 +1,12 @@
 from sqlalchemy import Table, Column, Integer, String, DateTime, func, ForeignKey, create_engine
 from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from session import session
 
 Base = declarative_base()
-engine = create_engine("sqlite:///data.db")
-Session = sessionmaker(bind=engine)
-session = Session()
+# engine = create_engine("sqlite:///data.db")
+# Session = sessionmaker(bind=engine)
+# session = Session()
 
 
 class User(Base):

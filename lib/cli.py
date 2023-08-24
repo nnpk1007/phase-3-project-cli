@@ -155,9 +155,6 @@ class Cli():
         print(yellow("Item added"))
     
 
-    
-            
-
     def buy_an_item(self):
 
         self.clear_screen()
@@ -174,7 +171,7 @@ class Cli():
         else:
             Transaction.add_transaction(item_id, self.current_user.id)
             Item.delete_item_by_id(item_id)
-            print(yellow("Item bougt"))
+            print(yellow("Item bought"))
     
 
     def your_transactions(self):

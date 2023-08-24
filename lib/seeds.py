@@ -2,8 +2,9 @@
 
 import random
 from faker import Faker
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
+from session import session
 
 from models import User, Item, Transaction
 
@@ -11,9 +12,9 @@ fake = Faker()
 
 
 if __name__ == "__main__":
-    engine = create_engine("sqlite:///data.db")
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    # engine = create_engine("sqlite:///data.db")
+    # Session = sessionmaker(bind=engine)
+    # session = Session()
 
     # clear old data
     session.query(User).delete()
