@@ -112,7 +112,13 @@ class Cli():
 
         title = input("Item title: ")
         description = input("Description: ")
-        price = input("Price: $")
+        # use while loop to check if price is a valid number
+        while True:
+            price = input("Price: $")
+            if price.isdigit():
+                break
+            else:
+                print(red("Invalid price. Please enter a valid number."))
 
         item = Item.add_item(title, description, price, seller_id=self.current_user.id)
         print(yellow("Item added"))
