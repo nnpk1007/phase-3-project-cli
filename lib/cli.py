@@ -57,7 +57,7 @@ class Cli():
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
         user = User.find_user_by_email(email)
-        
+
         if user:
             print(red("This email is already in used. Please sign up with another email"))
             self.start()
@@ -191,10 +191,15 @@ class Cli():
         else:
             print(blue("Your transactions:"))
 
+            total_spent = 0
+
             for transaction in transactions:    
                 print(yellow(f"Item: {transaction.item_title}"))
                 print(f"Transaction amount: ${transaction.transaction_amount}")
                 print(f"Transaction date: {transaction.transaction_date}")
+                total_spent += transaction.transaction_amount
+            
+            print(blue(f"Total amount spent: ${total_spent}"))
 
 
     def exit(self):
