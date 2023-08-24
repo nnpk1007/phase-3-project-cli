@@ -61,16 +61,21 @@ Users can exit the application when they want.
     ```bash
     pipenv shell
 
-3. Create tables (because I have .gitignore file to ignore data.db file, so you have to do this step to avoid error)
+4. Create tables (because I have .gitignore file to ignore data.db file, so you have to do this step to avoid error)
     ```bash
     cd lib
     alembic upgrade head
 
-4. Set up initial data (you can skip this step if you don't want any data in your table):
+5. Set up initial data (you can skip this step if you don't want any data in your table):
     ```bash
     python3 seeds.py
     ```
-        
+    I have commented out these lines in seeds.py to avoid error when you run seeds.py for the first time.
+        session.query(User).delete()
+        session.query(Item).delete()
+        session.query(Transaction).delete()
+    If you want to clear old data and create new fake data to test, you should remove these comments in seeds.py file.
+
 6. Run the applicaiton (you're already in lib folder):
     ```bash
     python3 cli.py
