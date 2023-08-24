@@ -17,9 +17,9 @@ if __name__ == "__main__":
     # session = Session()
 
     # clear old data
-    session.query(User).delete()
-    session.query(Item).delete()
-    session.query(Transaction).delete()
+    # session.query(User).delete()
+    # session.query(Item).delete()
+    # session.query(Transaction).delete()
 
     print("Seeding data...")
 
