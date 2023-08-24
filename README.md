@@ -49,7 +49,7 @@ Users can exit the application when they want.
 
 1. Clone the repository:
    ```bash
-   git clone <https://github.com/nnpk1007/phase-3-project-cli/tree/main>
+   git clone https://github.com/nnpk1007/phase-3-project-cli
    
    cd phase-3-project-cli
 
