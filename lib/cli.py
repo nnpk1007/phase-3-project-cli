@@ -56,16 +56,22 @@ class Cli():
 
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
-        if re.fullmatch(regex, email):
-            user = User.create_user(name, email)
-
-            self.current_user = user
-            print(blue(f"Hello, {user.name}!"))
-
-            self.show_user_options()
+        user = User.find_user_by_email(email)
+        
+        if user:
+            print(red("This email is already in used. Please sign up with another email"))
+            self.start()
         else:
-            print(red("Invalid email. Please try again!"))
-            self.start() 
+            if re.fullmatch(regex, email):
+                user = User.create_user(name, email)
+
+                self.current_user = user
+                print(blue(f"Hello, {user.name}!"))
+
+                self.show_user_options()
+            else:
+                print(red("Invalid email. Please try again!"))
+                self.start() 
 
 
     def show_user_options(self):
