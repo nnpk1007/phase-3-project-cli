@@ -69,12 +69,14 @@ class Cli():
         
         while True:
             
-            options = ["Items On Sale", "Add Item For Sale", "Buy An Item", "Your Transactions", "Exit"]
+            options = ["Items On Sale","Search For Item", "Add Item For Sale", "Buy An Item", "Your Transactions", "Exit"]
             terminal_menu = TerminalMenu(options)
             menu_entry_index = terminal_menu.show()
             
             if options[menu_entry_index] == "Items On Sale":
-                self.items_on_sale()    
+                self.items_on_sale()  
+            elif options[menu_entry_index] == "Search For Item":
+                self.search_for_item()  
             elif options[menu_entry_index] == "Add Item For Sale":
                 self.add_item_for_sale()
             elif options[menu_entry_index] == "Buy An Item":
@@ -95,15 +97,43 @@ class Cli():
         if items:
             print(yellow("Items on sale:"))
 
-            for item in items:
+            self.print_items(items)
+        else:
+            print("No items are available")
+    
+    
+
+
+    def search_for_item(self):
+        self.clear_screen()
+        
+        search_item = input("What item are you looking for? ").lower()
+        items = Item.show_items()
+
+        matching_items = []
+        for item in items:
+            if search_item in item.title.lower().split():
+                matching_items.append(item)
+            
+        #print(matching_items)
+
+        if matching_items:
+            print(yellow("Matching Items:"))
+            self.print_items(matching_items)
+            
+        else:
+            print(yellow("Item not found."))
+
+
+    def print_items(self, items):
+
+        for item in items:
                 print(blue(f"Item: {item.title}"))
                 print(f"ID: {item.id}")
                 print(f"Description: {item.description}")
                 print(f"Price: ${item.price}")
                 user = User.find_user_by_seller_id(item.seller_id)
                 print(f"Sold by: {user.name}")
-        else:
-            print("No items are available")
 
 
     def add_item_for_sale(self):
@@ -123,6 +153,9 @@ class Cli():
         item = Item.add_item(title, description, price, seller_id=self.current_user.id)
         print(yellow("Item added"))
     
+
+    
+            
 
     def buy_an_item(self):
 
