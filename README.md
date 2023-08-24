@@ -6,7 +6,7 @@ Welcome to Flatiron Market Place! This project is a command-line application tha
 
 ## Introduction
 
-Flatiron Market Place is a command-line application built using SQLAlchemy that allows users to interact with an online marketplace. Users can log in or sign up, view items on sale, add their own items for sale, buy items, and view their transaction history.
+Flatiron Market Place is a command-line application built using SQLAlchemy that allows users to interact with an online marketplace. Users can log in or sign up, view items on sale, search item, add their own items for sale, buy items, and view their transaction history.
 
 ## Features
 
@@ -16,7 +16,11 @@ Users can log in with their email or sign up if they're new to the platform. The
 
 ### View Items
 
-Users can view a list of items available for sale. The list of items includes item details such as title, description, price, and the name of the seller.
+Logged-in users can view a list of items available for sale. The list of items includes item details such as title, description, price, and the name of the seller.
+
+### Search Item
+
+Logged-in users can search an item to buy. The application will show all matching items if they're found.
 
 ### Add Item For Sale
 
@@ -24,11 +28,11 @@ Logged-in users can add items they want to sell to the marketplace. They provide
 
 ### Buy An Item
 
-Users can buy items listed by other sellers. They enter the item ID of the item they want to buy. The transaction is recorded, and the item is removed from the marketplace.
+Logged-in users can buy items listed by other sellers. They enter the item ID of the item they want to buy. The transaction is recorded, and the item is removed from the marketplace.
 
 ### View Your Transactions
 
-Users can view a list of their past transactions. This list includes the title of the item, the transaction amount, and the date of the transaction.
+Logged-in users can view a list of their past transactions. This list includes the title of the item, the transaction amount, and the date of the transaction.
 
 ### Exit
 
