@@ -78,7 +78,7 @@ class Cli():
         
         while True:
             
-            options = ["Items On Sale","Search For Item", "Add Item For Sale", "Buy An Item", "Your Transactions", "Exit"]
+            options = ["Items On Sale","Search For Item", "Add Item For Sale", "Buy An Item", "Remove An Item", "Your Transactions", "Exit"]
             terminal_menu = TerminalMenu(options)
             menu_entry_index = terminal_menu.show()
             
@@ -90,6 +90,8 @@ class Cli():
                 self.add_item_for_sale()
             elif options[menu_entry_index] == "Buy An Item":
                 self.buy_an_item()
+            elif options[menu_entry_index] == "Remove An Item":
+                self.remove_an_item()
             elif options[menu_entry_index] == "Your Transactions":
                 self.your_transactions()
             else:
@@ -108,7 +110,7 @@ class Cli():
 
             self.print_items(items)
         else:
-            print("No items are available")
+            print("No items are available.")
     
 
     def search_for_item(self):
@@ -158,7 +160,7 @@ class Cli():
                 print(red("Invalid price. Please enter a valid number."))
 
         item = Item.add_item(title, description, price, seller_id=self.current_user.id)
-        print(yellow("Item added"))
+        print(yellow("Item added."))
     
 
     def buy_an_item(self):
@@ -171,14 +173,31 @@ class Cli():
         item = Item.find_item_by_id(item_id)
         
         if not item:
-            print(yellow("Item not found"))
+            print(yellow("Item not found."))
         elif item.seller_id == self.current_user.id:
             print(red("You can not buy an item which is sold by yourself."))
         else:
             Transaction.add_transaction(item_id, self.current_user.id)
             Item.delete_item_by_id(item_id)
-            print(yellow("Item bought"))
+            print(blue("Item bought."))
     
+
+    def remove_an_item(self):
+        self.clear_screen()
+        self.items_on_sale()
+
+        item_id = input(yellow("Enter the item id which you want to remove: "))
+                
+        item = Item.find_item_by_id(item_id)
+
+        if not item:
+            print(yellow("Item not found."))
+        elif item.seller_id != self.current_user.id:
+            print(red("You can not remove an item which is sold by another user."))
+        else:
+            Item.delete_item_by_id(item_id)
+            print(red("Item removed."))
+
 
     def your_transactions(self):
 
