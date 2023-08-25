@@ -30,9 +30,13 @@ Logged-in users can add items they want to sell to the marketplace. They provide
 
 Logged-in users can buy items listed by other sellers. They enter the item ID of the item they want to buy. The transaction is recorded, and the item is removed from the marketplace.
 
+### Remove An Item
+
+Logged-in users can remove their items. They enter the item ID, and the item is removed from the marketplace.
+
 ### View Your Transactions
 
-Logged-in users can view a list of their past transactions. This list includes the title of the item, the transaction amount, and the date of the transaction.
+Logged-in users can view a list of their past transactions. This list includes the title of the item, the transaction amount, the date of the transaction, and the total amount spent.
 
 ### Exit
 
