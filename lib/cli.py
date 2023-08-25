@@ -12,6 +12,7 @@ class Cli():
 
     
     def start(self):
+        self.clear_screen()
         
         print(yellow("WELCOME TO FLATIRON MARKET PLACE"))
         options = ["Login", "Sign Up", "Exit"]
