@@ -1,8 +1,10 @@
 # https://www.freecodecamp.org/news/gitignore-file-how-to-ignore-files-and-folders-in-git/
 
 # ignore SQLite database file
-lib/data.db
+data.db
 
 # ignore virtual enviroment files
 .venv
-# venv/
+
+# ignore __pycache__
+__pycache__/

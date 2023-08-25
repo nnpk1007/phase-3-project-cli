@@ -71,10 +71,13 @@ Users can exit the application when they want.
     python3 seeds.py
     ```
     I have commented out these lines in seeds.py to avoid error when you run seeds.py for the first time.
-        session.query(User).delete()
-        session.query(Item).delete()
-        session.query(Transaction).delete()
+    ```bash
+    session.query(User).delete()
+    session.query(Item).delete()
+    session.query(Transaction).delete()
+    ```
     If you want to clear old data and create new fake data to test, you should remove these comments in seeds.py file.
+    If you don't remove these comments, you will have old data and new data in your tables.
 
 6. Run the applicaiton (you're already in lib folder):
     ```bash
